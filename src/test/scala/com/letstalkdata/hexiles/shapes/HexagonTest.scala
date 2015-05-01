@@ -10,23 +10,19 @@ import utest._
 object HexagonTest extends TestSuite {
 
   val Epsilon = 0.00001f
+  val size = 35
 
   val tests = TestSuite {
     'perimeter_has_6_lines {
-      val center = new Point(0.0f, 0.0f)
       val hex = new Hexagon(0,0)
-      val size = 1
-      val segments = hex.perimeter(center, size)
+      val segments = hex.perimeter()
 
       assert(6 == segments.size)
     }
     'calculates_correct_perimeter_segments {
-      val center = new Point(0.0f, 0.0f)
       val hex = new Hexagon(0,0)
 
-      val size = 1
-
-      val segments = hex.perimeter(center, size)
+      val segments = hex.perimeter()
       val height = (math.sqrt(3)/2 * size).toFloat
 
       val expected0 = new Segment(new Point(size,0), new Point(0.5f * size, -height))
@@ -46,11 +42,15 @@ object HexagonTest extends TestSuite {
 
       val expected5 = new Segment(new Point(0.5f * size,height), new Point(size,0))
       assert(segmentsReasonablyEqual(segments(5), expected5, Epsilon))
-
     }
-    'center_point_is_correct {
-      val hex = new Hexagon(1, 1)
-      hex.centerPoint(10)
+    'hexagon_contains_center_point {
+      val hex = new Hexagon(1, 0)
+      val center = new Point(1.5f * size, math.sqrt(3).toFloat/2.0f * size)
+
+      assert(hex.contains(center))
+    }
+    'more_contains_tests {
+      assert(false)
     }
   }
 
