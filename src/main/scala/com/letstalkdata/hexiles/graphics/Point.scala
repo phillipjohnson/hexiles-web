@@ -6,4 +6,5 @@ package com.letstalkdata.hexiles.graphics
  */
 case class Point(x:Float, y:Float) {
 
+  override def toString = "(" + x + ", " + y + ")"
 }

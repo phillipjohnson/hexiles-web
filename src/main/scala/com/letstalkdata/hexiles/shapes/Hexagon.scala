@@ -19,14 +19,21 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
   val cube = new Cube(column, -column - row, row)
 
   def draw(context:dom.CanvasRenderingContext2D) = {
+    draw(context, Colors.White)
+  }
+
+  def draw(context:dom.CanvasRenderingContext2D, fill:Colors.Color) = {
     val points = perimeterPoints(centerPoint(), Hexagon.radius)
     context.beginPath()
+    context.moveTo(points(0).x, points(0).y)
     (0 until 6).foreach(i => {
-      val start = points(i)
       val end = points((i + 1) % 6)
-      context.moveTo(start.x, start.y)
       context.lineTo(end.x, end.y)
     })
+    context.closePath()
+    context.fillStyle = fill.toString
+    context.fill()
+    context.strokeStyle = Colors.Black.toString
     context.stroke()
   }
 
@@ -65,7 +72,7 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
   }
 
 
-
+  override def toString = "(" + column + ", " + row + ")"
 
 
 }

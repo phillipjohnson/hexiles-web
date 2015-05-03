@@ -1,6 +1,7 @@
 package com.letstalkdata.hexiles
 
-import com.letstalkdata.hexiles.graphics.Point
+import com.letstalkdata.hexiles.game.{Piece, Board}
+import com.letstalkdata.hexiles.graphics.{Colors, Point}
 import com.letstalkdata.hexiles.shapes.Hexagon
 
 import scala.scalajs.js.JSApp
@@ -16,23 +17,18 @@ object HexilesApp extends JSApp {
   val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
   def main() = {
 
-    val hexes:Seq[Hexagon] = (0 to 4).flatMap(row => {
-      (4 - row to 8 - row).map(column => new Hexagon(column, row))
-    })
+    val board = new Board()
+    board.draw(ctx)
 
-    hexes.foreach(hex => {
-      val center = hex.centerPoint(35)
-      val points = hex.perimeterPoints(center, 35)
-      ctx.beginPath()
-      (0 until 6).foreach(i => {
-        val start = points(i)
-        val end = points((i + 1) % 6)
-        ctx.moveTo(start.x, start.y)
-        ctx.lineTo(end.x, end.y)
-      })
-      ctx.stroke()
-    })
+    val piece = new Piece(Colors.Olivine)
+    piece.draw(ctx)
 
+    canvas.onclick = { (e: dom.MouseEvent) =>
+      val pt = new Point(e.pageX.toFloat, e.pageY.toFloat)
+      //val found = hexes.filter(hex => hex.contains(pt))
+      //dom.console.log(pt + ": " + found)
+      ctx.fillRect(e.pageX, e.pageY, 10, 10)
+    }
   }
 
 }

@@ -1,5 +1,12 @@
-/*
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+#canvas-holder {
+    display:block;
+}
+
 #game-canvas {
-    width: 500px;
-    height: 500px;
-}*/
+    display:block;
+}

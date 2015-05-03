@@ -49,8 +49,23 @@ object HexagonTest extends TestSuite {
 
       assert(hex.contains(center))
     }
-    'more_contains_tests {
-      assert(false)
+    'hexagon_does_not_contain_outside_point {
+      val hex = new Hexagon(1, 0)
+      val outside = new Point(5 * size, 5 * size)
+
+      assert(!hex.contains(outside))
+    }
+    'hexagon_contains_edge {
+      val hex = new Hexagon(1, 0)
+      val edge = new Point(1.5f * size, 0)
+
+      assert(hex.contains(edge))
+    }
+    'hexagon_contains_vertex {
+      val hex = new Hexagon(1, 0)
+      val vertex = new Point(2.0f * size -1, 1)
+
+      assert(hex.contains(vertex))
     }
   }
 
