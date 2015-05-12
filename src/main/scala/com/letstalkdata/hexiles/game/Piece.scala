@@ -9,10 +9,23 @@ import org.scalajs.dom.CanvasRenderingContext2D
 
  */
 class Piece(color:Colors.Color) extends Drawable {
-  var x = 0
-  var y = 0
 
-  val hexes = List(new Hexagon(3,3))
+  val hexes:Seq[Hexagon] = List(new Hexagon(3,3))
+
+  def x = hexes(0).x
+  def y = hexes(0).y
+
+  def moveTo(point:Point) = {
+    //val dx = x - point.x
+    //val dy = y - point.y
+    for(hex <- hexes) {
+      //TODO: Set the location of the hex on the grid
+
+      //TODO: WILL NOT WORK with >1 hex
+      hex.x = point.x
+      hex.y = point.y
+    }
+  }
 
   override def draw(context: CanvasRenderingContext2D): Unit = {
     hexes.foreach(hex => hex.draw(context, color))

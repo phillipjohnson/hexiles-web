@@ -18,6 +18,10 @@ object Hexagon {
 class Hexagon(val column: Int, val row:Int) extends Drawable {
   val cube = new Cube(column, -column - row, row)
 
+  var x = Hexagon.radius * 1.5f * column
+  var y = Hexagon.radius * Hexagon.Sqrt3 * (row + column/2.0f)
+
+
   def draw(context:dom.CanvasRenderingContext2D) = {
     draw(context, Colors.White)
   }
@@ -53,6 +57,8 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     else if(dy > dz) ry = -rx - rz
     else rz = -rx - ry
 
+    //dom.console.log(rx + " " + ry + " " +rz)
+    //dom.console.log(cube.x + " " + cube.y + " " +cube.z)
     rx == cube.x && ry == cube.y && rz == cube.z
   }
 
@@ -67,8 +73,8 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     (0 until 6).map(i => new Segment(points(i), points((i + 1) % 6)))
   }
 
-  private def centerPoint() = {
-    new Point(Hexagon.radius * 1.5f * column, Hexagon.radius * Hexagon.Sqrt3 * (row + column/2.0f))
+  def centerPoint() = {
+    new Point(x, y)
   }
 
 
