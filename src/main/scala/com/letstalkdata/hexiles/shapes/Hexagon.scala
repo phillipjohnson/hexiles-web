@@ -8,18 +8,18 @@ import org.scalajs.dom
  * Date: 4/27/15
  */
 object Hexagon {
-  private val radius = 35.0f
+  val radius = 35.0f
   private val RotationAngle = (math.Pi / 3).toFloat
-  private val Sqrt3 = math.sqrt(3).toFloat
+  val Sqrt3 = math.sqrt(3).toFloat
   private val TwoThirds = (2.0/3.0).toFloat
 }
 
 
 class Hexagon(val column: Int, val row:Int) extends Drawable {
-  val cube = new Cube(column, -column - row, row)
+  var cube = new Cube(column, -column - row, row)
 
-  var x = Hexagon.radius * 1.5f * column
-  var y = Hexagon.radius * Hexagon.Sqrt3 * (row + column/2.0f)
+  var x = cube.toPoint.x
+  var y = cube.toPoint.y
 
 
   def draw(context:dom.CanvasRenderingContext2D) = {
@@ -42,6 +42,18 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
   }
 
   def contains(point:Point) = {
+    val nearestCube = pointToCube(point)
+    nearestCube.x == cube.x && nearestCube.y == cube.y && nearestCube.z == cube.z
+  }
+
+  def snapToGrid(point:Point) = {
+    val nearestCube = pointToCube(point)
+    cube = nearestCube
+    x = cube.toPoint.x
+    y = cube.toPoint.y
+  }
+
+  private def pointToCube(point:Point):Cube = {
     val fractionalColumn = point.x * Hexagon.TwoThirds / Hexagon.radius
     val fractionalRow = (-point.x / 3.0f + Hexagon.Sqrt3 / 3.0f * point.y) / Hexagon.radius
 
@@ -57,9 +69,7 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     else if(dy > dz) ry = -rx - rz
     else rz = -rx - ry
 
-    //dom.console.log(rx + " " + ry + " " +rz)
-    //dom.console.log(cube.x + " " + cube.y + " " +cube.z)
-    rx == cube.x && ry == cube.y && rz == cube.z
+    new Cube(rx, ry, rz)
   }
 
   private def perimeterPoints(center:Point, size:Float):Seq[Point] = {

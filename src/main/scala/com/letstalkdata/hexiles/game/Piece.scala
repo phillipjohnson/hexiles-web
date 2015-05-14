@@ -27,6 +27,20 @@ class Piece(color:Colors.Color) extends Drawable {
     }
   }
 
+  def move(dx:Float, dy:Float): Unit = {
+    for(hex <- hexes) {
+      //TODO: Set the location of the hex on the grid
+      hex.x += dx
+      hex.y += dy
+    }
+  }
+
+  def snapToGrid(point:Point) = {
+    for(hex <- hexes) {
+      hex.snapToGrid(point)
+    }
+  }
+
   override def draw(context: CanvasRenderingContext2D): Unit = {
     hexes.foreach(hex => hex.draw(context, color))
   }

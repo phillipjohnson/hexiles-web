@@ -25,26 +25,37 @@ object HexilesApp extends JSApp {
     var offsetX = 0.0f
     var offsetY = 0.0f
 
+    var cursor = new Point(0, 0)
+
     doRedraw()
 
     canvas.onmouseup = { (e:dom.MouseEvent) =>
-      redraw = false
+      if(redraw) {
+        redraw = false
+        cursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
+        toMove.snapToGrid(cursor)
+        doRedraw()
+      }
     }
 
     canvas.onmousedown = { (e: dom.MouseEvent) =>
-      val pt = new Point(e.pageX.toFloat, e.pageY.toFloat)
-            val pieceOpt = findClickedPiece(pt)
-            if(pieceOpt.isDefined) {
-              toMove = pieceOpt.get
-              offsetX = pt.x - toMove.x
-              offsetY = pt.y - toMove.y
-              redraw = true
-            }
+      cursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
+      val pieceOpt = findClickedPiece(cursor)
+      if(pieceOpt.isDefined) {
+        toMove = pieceOpt.get
+        offsetX = cursor.x - toMove.x
+        offsetY = cursor.y - toMove.y
+        redraw = true
+      }
     }
 
     canvas.onmousemove = { (e:dom.MouseEvent) =>
       if(redraw) {
-        toMove.moveTo(new Point((e.pageX - offsetX).toFloat, (e.pageY - offsetY).toFloat))
+        val newCursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
+        val dx = newCursor.x - cursor.x
+        val dy = newCursor.y - cursor.y
+        toMove.move(dx, dy)
+        cursor = newCursor
       }
     }
 
@@ -59,7 +70,6 @@ object HexilesApp extends JSApp {
   }
 
   private def findClickedPiece(point:Point):Option[Piece] = {
-    dom.console.log(pieces.find(piece => piece.contains(point)).toString)
     pieces.find(piece => piece.contains(point))
   }
 
