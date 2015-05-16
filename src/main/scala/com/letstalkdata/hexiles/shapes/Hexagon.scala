@@ -27,7 +27,7 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
   }
 
   def draw(context:dom.CanvasRenderingContext2D, fill:Colors.Color) = {
-    val points = perimeterPoints(centerPoint(), Hexagon.radius)
+    val points = perimeterPoints()
     context.beginPath()
     context.moveTo(points(0).x, points(0).y)
     (0 until 6).foreach(i => {
@@ -47,10 +47,14 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
   }
 
   def snapToGrid(point:Point) = {
-    val nearestCube = pointToCube(point)
-    cube = nearestCube
+    resetGridPosition(point)
     x = cube.toPoint.x
     y = cube.toPoint.y
+  }
+
+  def resetGridPosition(point:Point) = {
+    val nearestCube = pointToCube(point)
+    cube = nearestCube
   }
 
   private def pointToCube(point:Point):Cube = {
@@ -72,14 +76,16 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     new Cube(rx, ry, rz)
   }
 
-  private def perimeterPoints(center:Point, size:Float):Seq[Point] = {
+  private def perimeterPoints():Seq[Point] = {
+    val center = centerPoint()
+    val size = Hexagon.radius
     (0 until 6).map(i => new Point(
       center.x + size * math.cos(Hexagon.RotationAngle * i).toFloat,
       center.y - size * math.sin(Hexagon.RotationAngle * i).toFloat))
   }
 
   def perimeter():Seq[Segment] = {
-    val points = perimeterPoints(centerPoint(), Hexagon.radius)
+    val points = perimeterPoints()
     (0 until 6).map(i => new Segment(points(i), points((i + 1) % 6)))
   }
 
@@ -87,8 +93,16 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     new Point(x, y)
   }
 
+  def boundingRect():Rectangle = {
+    val top = perimeterPoints().minBy(_.y).y
+    val left = perimeterPoints().minBy(_.x).x
+    val bottom = perimeterPoints().maxBy(_.y).y
+    val right = perimeterPoints().maxBy(_.x).x
 
-  override def toString = "(" + column + ", " + row + ")"
+    new Rectangle(new Point(left, top), new Point(right, bottom))
+  }
+
+  override def toString = "Hex: (" + column + ", " + row + ")"
 
 
 }

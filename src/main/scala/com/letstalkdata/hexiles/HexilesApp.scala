@@ -33,7 +33,7 @@ object HexilesApp extends JSApp {
       if(redraw) {
         redraw = false
         cursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
-        toMove.snapToGrid(cursor)
+        toMove.snapToGrid()
         doRedraw()
       }
     }

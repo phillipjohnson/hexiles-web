@@ -10,7 +10,7 @@ import org.scalajs.dom
  */
 class Board extends Drawable {
   val tiles:Seq[Hexagon] = (0 to 4).flatMap(row => {
-    (4 - row to 8 - row).map(column => new Hexagon(column, row))
+    (5 - row to 9 - row).map(column => new Hexagon(column, row))
   })
 
   override def draw(context:dom.CanvasRenderingContext2D): Unit = {

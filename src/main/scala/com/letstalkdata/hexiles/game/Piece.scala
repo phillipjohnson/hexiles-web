@@ -10,7 +10,7 @@ import org.scalajs.dom.CanvasRenderingContext2D
  */
 class Piece(color:Colors.Color) extends Drawable {
 
-  val hexes:Seq[Hexagon] = List(new Hexagon(3,3))
+  val hexes:Seq[Hexagon] = List(new Hexagon(3,3), new Hexagon(3, 4), new Hexagon(4, 2), new Hexagon(4, 3), new Hexagon(3, 2))
 
   def x = hexes(0).x
   def y = hexes(0).y
@@ -35,9 +35,15 @@ class Piece(color:Colors.Color) extends Drawable {
     }
   }
 
-  def snapToGrid(point:Point) = {
+  def snapToGrid() = {
     for(hex <- hexes) {
-      hex.snapToGrid(point)
+      hex.snapToGrid(hex.centerPoint())
+    }
+  }
+
+  def resetGridPosition(point:Point) = {
+    for(hex <- hexes) {
+      hex.resetGridPosition(point)
     }
   }
 
@@ -46,4 +52,12 @@ class Piece(color:Colors.Color) extends Drawable {
   }
 
   override def contains(point: Point): Boolean = hexes.exists(hex => hex.contains(point))
+
+  def intersects(board:Board): Boolean = {
+    for(tile <- board.tiles) {
+      if(hexes.exists(_.boundingRect().intersects(tile.boundingRect()))) return true
+    }
+
+    false
+  }
 }
