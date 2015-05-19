@@ -20,13 +20,12 @@ object HexilesApp extends JSApp {
 
   private var redraw = false
 
+  var toMove:Piece = pieces(0)
+  var offsetX = 0.0f
+  var offsetY = 0.0f
+  var cursor = new Point(0, 0)
+
   def main() = {
-    var toMove:Piece = pieces(0)
-    var offsetX = 0.0f
-    var offsetY = 0.0f
-
-    var cursor = new Point(0, 0)
-
     doRedraw()
 
     canvas.onmouseup = { (e:dom.MouseEvent) =>
@@ -39,14 +38,8 @@ object HexilesApp extends JSApp {
     }
 
     canvas.onmousedown = { (e: dom.MouseEvent) =>
-      cursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
-      val pieceOpt = findClickedPiece(cursor)
-      if(pieceOpt.isDefined) {
-        toMove = pieceOpt.get
-        offsetX = cursor.x - toMove.x
-        offsetY = cursor.y - toMove.y
-        redraw = true
-      }
+      if(e.shiftKey) rotatePiece(e)
+      else if(e.button == 0) selectPiece(e)
     }
 
     canvas.onmousemove = { (e:dom.MouseEvent) =>
@@ -60,6 +53,29 @@ object HexilesApp extends JSApp {
     }
 
     dom.setInterval(() => run(), 10)
+  }
+
+  private def selectPiece(e:dom.MouseEvent) = {
+    cursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
+    val pieceOpt = findClickedPiece(cursor)
+    if(pieceOpt.isDefined) {
+      toMove = pieceOpt.get
+      offsetX = cursor.x - toMove.x
+      offsetY = cursor.y - toMove.y
+      redraw = true
+    }
+  }
+
+  private def rotatePiece(e:dom.MouseEvent) = {
+    cursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
+    val pieceOpt = findClickedPiece(cursor)
+    if(pieceOpt.isDefined) {
+      toMove = pieceOpt.get
+      toMove.rotateLeft()
+      offsetX = cursor.x - toMove.x
+      offsetY = cursor.y - toMove.y
+      redraw = true
+    }
   }
 
   private def doRedraw(): Unit = {

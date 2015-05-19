@@ -14,4 +14,6 @@ class Cube(val x:Int, val y:Int, val z:Int) {
     new Point(pointX.toFloat, pointY.toFloat)
   }
 
+  override def toString = "(" + x + ", " + y + ", " + z + ")"
+
 }

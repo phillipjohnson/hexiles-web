@@ -39,6 +39,12 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     context.fill()
     context.strokeStyle = Colors.Black.toString
     context.stroke()
+    drawCoords(context)
+  }
+
+  private def drawCoords(context:dom.CanvasRenderingContext2D): Unit = {
+    context.moveTo(centerPoint().x, centerPoint().y)
+    context.strokeText(cube.toString, centerPoint().x, centerPoint().y, 1000)
   }
 
   def contains(point:Point) = {
@@ -100,6 +106,30 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     val right = perimeterPoints().maxBy(_.x).x
 
     new Rectangle(new Point(left, top), new Point(right, bottom))
+  }
+
+  def rotateLeft(pivot:Hexagon) = {
+    val dx = pivot.cube.x - this.cube.x
+    val dy = pivot.cube.y - this.cube.y
+    val dz = pivot.cube.z - this.cube.z
+
+    dom.console.log("dx: " + dx + " dy: " + dy + " dz: " + dz)
+
+    val newX = cube.x - dz
+    val newY = cube.y - dx
+    val newZ = cube.z - dy
+
+    dom.console.log("PRE: " + cube)
+
+    cube = new Cube(newX, newY, newZ)
+
+    dom.console.log("POST: " + cube)
+
+    x = cube.toPoint.x
+    y = cube.toPoint.y
+
+    dom.console.log("x, y " + x + ", " + y)
+    //snapToGrid(centerPoint())
   }
 
   override def toString = "Hex: (" + column + ", " + row + ")"
