@@ -8,9 +8,9 @@ import org.scalajs.dom.CanvasRenderingContext2D
  * Author: Phillip Johnson
 
  */
-class Piece(color:Colors.Color) extends Drawable {
+class Piece(hexes:Seq[Hexagon], color:Colors.Color) extends Drawable {
 
-  val hexes:Seq[Hexagon] = List(new Hexagon(3,3), new Hexagon(3, 4), new Hexagon(4, 2), new Hexagon(4, 3), new Hexagon(3, 2))
+  //val hexes:Seq[Hexagon] = List(new Hexagon(3,3), new Hexagon(3, 4), new Hexagon(4, 2), new Hexagon(4, 3), new Hexagon(3, 2))
 
   def x = hexes(0).x
   def y = hexes(0).y
