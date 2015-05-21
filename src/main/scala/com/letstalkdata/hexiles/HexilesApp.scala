@@ -32,7 +32,7 @@ object HexilesApp extends JSApp {
     canvas.onmouseup = { (e:dom.MouseEvent) =>
       if(redraw) {
         redraw = false
-        cursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
+        cursor = getRelativeCursor(e)
         toMove.snapToGrid()
         doRedraw()
       }
@@ -45,7 +45,7 @@ object HexilesApp extends JSApp {
 
     canvas.onmousemove = { (e:dom.MouseEvent) =>
       if(redraw) {
-        val newCursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
+        val newCursor = getRelativeCursor(e)
         val dx = newCursor.x - cursor.x
         val dy = newCursor.y - cursor.y
         toMove.move(dx, dy)
@@ -58,17 +58,17 @@ object HexilesApp extends JSApp {
 
   private def makePieces():Seq[Piece] = {
     List(
-      new Piece(List((7, -2), (6, -2), (8, -2), (7, -3), (8, -3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Olivine),
-      new Piece(List((2, 0), (1, 0), (1, 1), (3, 0), (4, -1)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Purple),
-      new Piece(List((10, -2), (10, -3), (10, -4), (11, -2), (12, -2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Tan),
-      new Piece(List((2, 6), (1, 6), (3, 6), (1, 7), (2, 7)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Mauve),
-      new Piece(List((7, 5), (8, 4), (8, 5), (6, 6), (5, 6)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Periwinkle),
-      new Piece(List((11, 1), (12, 0), (10, 1), (10, 2), (9, 2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Gold)
+      new Piece(List((2, 6), (1, 6), (1, 7), (2, 7), (3, 6)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Olivine),
+      new Piece(List((12, -3), (11, -4), (12, -4), (13, -3), (12, -2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Purple),
+      new Piece(List((7, -2), (6, -2), (8, -3), (8, -2), (9, -3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Tan),
+      new Piece(List((12, 1), (13, 0), (13, 1), (11, 2), (12, 2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Mauve),
+      new Piece(List((2, 2), (3, 0), (2, 1), (1, 3), (2, 3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Periwinkle),
+      new Piece(List((7, 6), (6, 6), (5, 6), (8, 5), (9, 4)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Gold)
     )
   }
 
   private def selectPiece(e:dom.MouseEvent) = {
-    cursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
+    cursor = getRelativeCursor(e)
     val pieceOpt = findClickedPiece(cursor)
     if(pieceOpt.isDefined) {
       toMove = pieceOpt.get
@@ -79,7 +79,7 @@ object HexilesApp extends JSApp {
   }
 
   private def rotatePiece(e:dom.MouseEvent) = {
-    cursor = new Point(e.pageX.toFloat, e.pageY.toFloat)
+    cursor = getRelativeCursor(e)
     val pieceOpt = findClickedPiece(cursor)
     if(pieceOpt.isDefined) {
       toMove = pieceOpt.get
@@ -95,6 +95,12 @@ object HexilesApp extends JSApp {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     board.draw(ctx)
     pieces.foreach(piece => piece.draw(ctx))
+  }
+
+  private def getRelativeCursor(e:dom.MouseEvent):Point = {
+    val x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - Math.floor(canvas.offsetLeft)
+    val y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop - Math.floor(canvas.offsetTop) + 1
+    new Point(x.toFloat, y.toFloat)
   }
 
   private def findClickedPiece(point:Point):Option[Piece] = {

@@ -1,12 +1,14 @@
 html, body {
     margin: 0;
     padding: 0;
+    background: #000000;
 }
 
 #canvas-holder {
     display:block;
+    text-align: center;
 }
 
 #game-canvas {
-    display:block;
+    display:inline;
 }
