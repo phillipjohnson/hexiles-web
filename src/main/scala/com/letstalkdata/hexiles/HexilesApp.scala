@@ -39,8 +39,7 @@ object HexilesApp extends JSApp {
     }
 
     canvas.onmousedown = { (e: dom.MouseEvent) =>
-      if(e.shiftKey) rotatePiece(e)
-      else if(e.button == 0) selectPiece(e)
+      if(e.button == 0) selectPiece(e)
     }
 
     canvas.onmousemove = { (e:dom.MouseEvent) =>
@@ -52,6 +51,8 @@ object HexilesApp extends JSApp {
         cursor = newCursor
       }
     }
+
+    dom.onkeydown = { (e:dom.KeyboardEvent) => rotatePiece(e) }
 
     dom.setInterval(() => run(), 10)
   }
@@ -78,16 +79,12 @@ object HexilesApp extends JSApp {
     }
   }
 
-  private def rotatePiece(e:dom.MouseEvent) = {
-    cursor = getRelativeCursor(e)
-    val pieceOpt = findClickedPiece(cursor)
-    if(pieceOpt.isDefined) {
-      toMove = pieceOpt.get
-      toMove.rotateLeft()
-      offsetX = cursor.x - toMove.x
-      offsetY = cursor.y - toMove.y
-      redraw = true
-    }
+  private def rotatePiece(e:dom.KeyboardEvent) = {
+//    dom.console.log("toMove: " + toMove.toString())
+//    dom.console.log("HIT: " + e.keyCode.toString())
+    if (e.keyCode == 37) toMove.rotateLeft()
+    else if (e.keyCode == 39) toMove.rotateRight()
+    doRedraw()
   }
 
   private def doRedraw(): Unit = {

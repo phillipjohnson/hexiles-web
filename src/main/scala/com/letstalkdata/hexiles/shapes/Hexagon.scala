@@ -109,27 +109,26 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
   }
 
   def rotateLeft(pivot:Hexagon) = {
+    rotate(pivot, left = true)
+  }
+
+  def rotateRight(pivot:Hexagon) = {
+    rotate(pivot, left = false)
+  }
+
+  private def rotate(pivot:Hexagon, left:Boolean) = {
     val dx = pivot.cube.x - this.cube.x
     val dy = pivot.cube.y - this.cube.y
     val dz = pivot.cube.z - this.cube.z
 
-    dom.console.log("dx: " + dx + " dy: " + dy + " dz: " + dz)
-
-    val newX = cube.x - dz
-    val newY = cube.y - dx
-    val newZ = cube.z - dy
-
-    dom.console.log("PRE: " + cube)
+    val newX = if(left) cube.x - dz else cube.x - dy
+    val newY = if(left) cube.y - dx else cube.y - dz
+    val newZ = if(left) cube.z - dy else cube.z - dx
 
     cube = new Cube(newX, newY, newZ)
 
-    dom.console.log("POST: " + cube)
-
     x = cube.toPoint.x
     y = cube.toPoint.y
-
-    dom.console.log("x, y " + x + ", " + y)
-    //snapToGrid(centerPoint())
   }
 
   override def toString = "Hex: (" + column + ", " + row + ")"

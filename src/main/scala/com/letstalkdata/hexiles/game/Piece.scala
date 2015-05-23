@@ -49,6 +49,8 @@ class Piece(hexes:Seq[Hexagon], color:Colors.Color) extends Drawable {
 
   def rotateLeft() = hexes.foreach(_.rotateLeft(hexes(0)))
 
+  def rotateRight() = hexes.foreach(_.rotateRight(hexes(0)))
+
   override def draw(context: CanvasRenderingContext2D): Unit = {
     hexes.foreach(hex => hex.draw(context, color))
   }
