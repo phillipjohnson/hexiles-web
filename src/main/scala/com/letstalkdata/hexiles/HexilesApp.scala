@@ -59,13 +59,13 @@ object HexilesApp extends JSApp {
 
   private def makePieces():Seq[Piece] = {
     List(
-      new Piece(List((2, 6), (1, 6), (1, 7), (2, 7), (3, 6)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Olivine),
+      new Piece(List((2, 7), (1, 8), (1, 7), (2, 6), (3, 6)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Olivine),
       new Piece(List((12, -3), (11, -4), (12, -4), (13, -3), (12, -2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Purple),
-      new Piece(List((7, -2), (6, -2), (8, -3), (8, -2), (9, -3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Tan),
-      new Piece(List((12, 1), (13, 0), (13, 1), (11, 2), (12, 2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Mauve),
-      new Piece(List((2, 2), (3, 0), (2, 1), (1, 3), (2, 3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Periwinkle),
-      new Piece(List((7, 6), (6, 6), (5, 6), (8, 5), (9, 4)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Gold)
-    //TODO: Add final piece
+      new Piece(List((7, -2), (6, -2), (8, -3), (8, -2), (9, -3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Melon),
+      new Piece(List((2, 9), (3, 8), (3, 9), (2, 10), (1, 10)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Pink),
+      new Piece(List((2, 2), (3, 0), (2, 1), (1, 3), (2, 3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Cerulean),
+      new Piece(List((7, 6), (6, 6), (5, 6), (8, 5), (9, 4)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Forest),
+      new Piece(List((12, 3), (10, 5), (11, 4), (13, 2), (12, 2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Gold)
     )
   }
 
