@@ -131,6 +131,19 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     y = cube.toPoint.y
   }
 
+  def flipOver(pivot:Hexagon) = {
+    val dx = pivot.cube.x - this.cube.x
+
+    val newX = this.cube.x + dx * 2
+    val newY = this.cube.y - dx
+    val newZ = this.cube.z - dx
+
+    cube = new Cube(newX, newY, newZ)
+
+    x = cube.toPoint.x
+    y = cube.toPoint.y
+  }
+
   override def toString = "Hex: (" + column + ", " + row + ")"
 
 

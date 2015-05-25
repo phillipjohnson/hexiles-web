@@ -52,7 +52,7 @@ object HexilesApp extends JSApp {
       }
     }
 
-    dom.onkeydown = { (e:dom.KeyboardEvent) => rotatePiece(e) }
+    dom.onkeydown = { (e:dom.KeyboardEvent) => alterPiece(e) }
 
     dom.setInterval(() => run(), 10)
   }
@@ -79,11 +79,13 @@ object HexilesApp extends JSApp {
     }
   }
 
-  private def rotatePiece(e:dom.KeyboardEvent) = {
-//    dom.console.log("toMove: " + toMove.toString())
-//    dom.console.log("HIT: " + e.keyCode.toString())
+  private def alterPiece(e:dom.KeyboardEvent) = {
     if (e.keyCode == 37) toMove.rotateLeft()
     else if (e.keyCode == 39) toMove.rotateRight()
+    else if (e.keyCode == 32 || e.keyCode == 13) {
+      e.preventDefault()
+      toMove.flip()
+    }
     doRedraw()
   }
 
