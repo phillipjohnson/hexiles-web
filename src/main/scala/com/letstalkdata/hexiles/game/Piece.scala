@@ -42,5 +42,10 @@ class Piece(hexes:Seq[Hexagon], color:Colors.Color) extends Drawable {
     hexes.foreach(hex => hex.draw(context, color))
   }
 
+  def highlight(context: CanvasRenderingContext2D): Unit = {
+    hexes.foreach(hex => hex.draw(context, color, shadow = true))
+    hexes.foreach(hex => hex.draw(context, color, shadow = false))
+  }
+
   override def contains(point: Point): Boolean = hexes.exists(hex => hex.contains(point))
 }

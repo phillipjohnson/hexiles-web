@@ -16,4 +16,6 @@ object Colors {
   case object Periwinkle extends Color("#527181")
   case object Gold extends Color("#CBC27E")
   case object Purple extends Color("#6C5B8B")
+  case object Gray20 extends Color("#333333")
+  case object Gray60 extends Color("#999999")
 }

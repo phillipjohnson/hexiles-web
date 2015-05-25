@@ -65,6 +65,7 @@ object HexilesApp extends JSApp {
       new Piece(List((12, 1), (13, 0), (13, 1), (11, 2), (12, 2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Mauve),
       new Piece(List((2, 2), (3, 0), (2, 1), (1, 3), (2, 3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Periwinkle),
       new Piece(List((7, 6), (6, 6), (5, 6), (8, 5), (9, 4)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Gold)
+    //TODO: Add final piece
     )
   }
 
@@ -94,6 +95,7 @@ object HexilesApp extends JSApp {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     board.draw(ctx)
     pieces.foreach(piece => piece.draw(ctx))
+    toMove.highlight(ctx)
   }
 
   private def getRelativeCursor(e:dom.MouseEvent):Point = {

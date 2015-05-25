@@ -22,11 +22,15 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
   var y = cube.toPoint.y
 
 
-  def draw(context:dom.CanvasRenderingContext2D) = {
-    draw(context, Colors.White)
+  def draw(context:dom.CanvasRenderingContext2D):Unit = {
+    draw(context, Colors.White, shadow = false)
   }
 
-  def draw(context:dom.CanvasRenderingContext2D, fill:Colors.Color) = {
+  def draw(context:dom.CanvasRenderingContext2D, fill:Colors.Color):Unit = {
+    draw(context, fill, shadow = false)
+  }
+
+  def draw(context:dom.CanvasRenderingContext2D, fill:Colors.Color, shadow:Boolean):Unit = {
     val points = perimeterPoints()
     context.beginPath()
     context.moveTo(points(0).x, points(0).y)
@@ -36,6 +40,14 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     })
     context.closePath()
     context.fillStyle = fill.toString
+    if(shadow) {
+      context.shadowColor = Colors.Gray20.toString
+      context.shadowBlur = 20
+      context.shadowOffsetX = 5
+      context.shadowOffsetY = 5
+    } else {
+      context.shadowColor = "transparent"
+    }
     context.fill()
     context.strokeStyle = Colors.Black.toString
     context.stroke()
