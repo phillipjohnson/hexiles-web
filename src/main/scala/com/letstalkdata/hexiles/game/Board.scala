@@ -5,6 +5,8 @@ import com.letstalkdata.hexiles.shapes.Hexagon
 import org.scalajs.dom
 
 /**
+ * The hexagon grid onto which pieces are placed.
+ *
  * Author: Phillip Johnson
  * Date: 4/30/15
  */

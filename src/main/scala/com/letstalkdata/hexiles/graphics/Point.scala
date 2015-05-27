@@ -1,6 +1,8 @@
 package com.letstalkdata.hexiles.graphics
 
 /**
+ * A pixel on the screen.
+ *
  * Author: Phillip Johnson
  * Date: 4/27/15
  */
