@@ -6,7 +6,7 @@ import com.letstalkdata.hexiles.graphics.Point
  * Author: Phillip Johnson
  * Date: 4/27/15
  */
-class Cube(val x:Int, val y:Int, val z:Int) {
+case class Cube(x:Int, y:Int, z:Int) {
 
   def toPoint:Point = {
     val pointX = Hexagon.radius * 1.5f * x

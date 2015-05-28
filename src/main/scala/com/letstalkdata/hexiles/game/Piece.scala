@@ -10,6 +10,8 @@ import org.scalajs.dom.CanvasRenderingContext2D
  */
 class Piece(hexes:Seq[Hexagon], color:Colors.Color) extends Drawable {
 
+  def getHexes = hexes
+
   /**
    * Returns the x coordinate of the first hexile in the piece.
    * @return the x coordinate of the first hexile in the piece.

@@ -16,10 +16,4 @@ case class Rectangle(var topLeft:Point, var bottomRight:Point) {
       this.topLeft.y < that.bottomRight.y &&
       this.bottomRight.y > that.topLeft.y
   }
-
-//  if (RectA.X1 < RectB.X2 &&
-//      RectA.X2 > RectB.X1 &&
-//      RectA.Y1 < RectB.Y2 &&
-//      RectA.Y2 > RectB.Y1)
-
 }
