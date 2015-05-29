@@ -1,6 +1,6 @@
 package com.letstalkdata.hexiles
 
-import com.letstalkdata.hexiles.game.{Piece, Board}
+import com.letstalkdata.hexiles.game.{Piece, Board, State}
 import com.letstalkdata.hexiles.graphics.{Colors, Point}
 import com.letstalkdata.hexiles.shapes.Hexagon
 
@@ -19,6 +19,9 @@ object HexilesApp extends JSApp {
   private val board = new Board()
   private val pieces:Seq[Piece] = makePieces()
 
+  private var state = new State(board, pieces)
+  def victory = state.isTerminal
+
   private var redraw = false
 
   var toMove:Piece = pieces(0)
@@ -29,28 +32,13 @@ object HexilesApp extends JSApp {
   def main() = {
     doRedraw()
 
-    canvas.onmouseup = { (e:dom.MouseEvent) =>
-      if(redraw) {
-        redraw = false
-        cursor = getRelativeCursor(e)
-        toMove.snapToGrid()
-        doRedraw()
-      }
-    }
+    canvas.onmouseup = { (e:dom.MouseEvent) => deselectPiece(e) }
 
     canvas.onmousedown = { (e: dom.MouseEvent) =>
       if(e.button == 0) selectPiece(e)
     }
 
-    canvas.onmousemove = { (e:dom.MouseEvent) =>
-      if(redraw) {
-        val newCursor = getRelativeCursor(e)
-        val dx = newCursor.x - cursor.x
-        val dy = newCursor.y - cursor.y
-        toMove.move(dx, dy)
-        cursor = newCursor
-      }
-    }
+    canvas.onmousemove = { (e:dom.MouseEvent) => movePiece(e) }
 
     dom.onkeydown = { (e:dom.KeyboardEvent) => alterPiece(e) }
 
@@ -60,7 +48,7 @@ object HexilesApp extends JSApp {
   private def makePieces():Seq[Piece] = {
     List(
       new Piece(List((2, 7), (1, 8), (1, 7), (2, 6), (3, 6)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Olivine),
-      new Piece(List((12, -3), (11, -4), (12, -4), (13, -3), (12, -2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Purple),
+      new Piece(List((12, -3), (10, -2), (11, -3), (13, -3), (12, -2)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Purple),
       new Piece(List((7, -2), (6, -2), (8, -3), (8, -2), (9, -3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Melon),
       new Piece(List((2, 9), (3, 8), (3, 9), (2, 10), (1, 10)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Pink),
       new Piece(List((2, 2), (3, 0), (2, 1), (1, 3), (2, 3)).map(coord => new Hexagon(coord._1, coord._2)), Colors.Cerulean),
@@ -88,6 +76,28 @@ object HexilesApp extends JSApp {
       toMove.flip()
     }
     doRedraw()
+    checkVictory()
+  }
+
+  private def movePiece(e:dom.MouseEvent) = {
+    if(redraw) {
+      val newCursor = getRelativeCursor(e)
+      val dx = newCursor.x - cursor.x
+      val dy = newCursor.y - cursor.y
+      toMove.move(dx, dy)
+      cursor = newCursor
+      checkVictory()
+    }
+  }
+
+  private def deselectPiece(e:dom.MouseEvent) = {
+    if(redraw) {
+      redraw = false
+      cursor = getRelativeCursor(e)
+      toMove.snapToGrid()
+      doRedraw()
+      checkVictory()
+    }
   }
 
   private def doRedraw(): Unit = {
@@ -95,7 +105,7 @@ object HexilesApp extends JSApp {
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     board.draw(ctx)
     pieces.foreach(piece => piece.draw(ctx))
-    toMove.highlight(ctx)
+    if(!victory) toMove.highlight(ctx)
   }
 
   private def getRelativeCursor(e:dom.MouseEvent):Point = {
@@ -106,6 +116,14 @@ object HexilesApp extends JSApp {
 
   private def findClickedPiece(point:Point):Option[Piece] = {
     pieces.find(piece => piece.contains(point))
+  }
+
+  private def checkVictory():Boolean = {
+    state = new State(board, pieces)
+    if(victory) {
+      dom.console.log("You won!")
+    }
+    victory
   }
 
   private def run() = {

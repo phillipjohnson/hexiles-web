@@ -72,7 +72,7 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
       context.shadowColor = "transparent"
     }
     context.fill()
-    context.strokeStyle = Colors.Black.toString
+    context.strokeStyle = Colors.Gray20.toString
     context.stroke()
     drawCoords(context)
   }
