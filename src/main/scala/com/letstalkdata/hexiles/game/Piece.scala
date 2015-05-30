@@ -8,7 +8,7 @@ import org.scalajs.dom.CanvasRenderingContext2D
  * Author: Phillip Johnson
 
  */
-class Piece(hexes:Seq[Hexagon], color:Colors.Color) extends Drawable {
+class Piece(val hexes:Seq[Hexagon], color:Colors.Color) extends Drawable {
 
   def getHexes = hexes
 
@@ -74,4 +74,19 @@ class Piece(hexes:Seq[Hexagon], color:Colors.Color) extends Drawable {
   }
 
   override def contains(point: Point): Boolean = hexes.exists(hex => hex.contains(point))
+
+
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Piece]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Piece =>
+      (that canEqual this) &&
+        hexes == that.hexes
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(hexes)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }

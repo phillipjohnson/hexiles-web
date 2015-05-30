@@ -211,4 +211,17 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
   override def toString = "Hex: (" + column + ", " + row + ")"
 
 
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Hexagon]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Hexagon =>
+      (that canEqual this) &&
+        cube == that.cube
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(cube)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 }
