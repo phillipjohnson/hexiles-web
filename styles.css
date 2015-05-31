@@ -1,7 +1,18 @@
 html, body {
     margin: 0;
     padding: 0;
-    background: #000000;
+    background: #4682b4;
+}
+
+.scorebar {
+    background: #80E566;
+    color: #333333;
+    font-family: 'Poiret One', cursive;
+    font-size: 32px;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 2px #333333 solid;
+    padding: 5px 5px 5px 5px;
 }
 
 #canvas-holder {

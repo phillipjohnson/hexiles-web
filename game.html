@@ -3,11 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Hexiles</title>
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
     <link href="styles.css" rel="stylesheet" />
 </head>
 <body>
+<div id="scorebar" class="scorebar">
+Score: <span id="score">0</span>
+</div>
 <div id="canvas-holder">
-    <canvas id="game-canvas" width="750" height="700"></canvas>
+    <canvas id="game-canvas" width="600" height="580"></canvas>
 </div>
 <!-- Include Scala.js compiled code -->
 <script type="text/javascript" src="./target/scala-2.11/hexiles-web-fastopt.js"></script>

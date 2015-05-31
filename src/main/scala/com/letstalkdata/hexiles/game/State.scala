@@ -1,6 +1,7 @@
 package com.letstalkdata.hexiles.game
 
-import com.letstalkdata.hexiles.shapes.Cube
+import com.letstalkdata.hexiles.graphics.Colors.Color
+import com.letstalkdata.hexiles.shapes.{Cube}
 
 /**
  * A snapshot of the game at a point in time.
@@ -26,20 +27,5 @@ class State(board:Board, pieces:Seq[Piece]) {
       .exists(matches => matches.size > 1)
   }
 
-  def solution(): Set[Piece] = {
-    pieces.filter(p => p.getHexes.forall(board.tiles contains)).toSet
-  }
-
-  def canEqual(other: Any): Boolean = other.isInstanceOf[State]
-
-  override def equals(other: Any): Boolean = other match {
-    case that: State =>
-      (that canEqual this) &&
-        this.solution() == that.solution()
-    case _ => false
-  }
-
-  override def hashCode(): Int = {
-    solution().map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
-  }
+  def asSolution:Solution = new Solution(pieces.filter(p => p.hexes.forall(board.tiles contains)))
 }

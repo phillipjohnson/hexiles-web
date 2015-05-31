@@ -8,9 +8,11 @@ import org.scalajs.dom.CanvasRenderingContext2D
  * Author: Phillip Johnson
 
  */
-class Piece(val hexes:Seq[Hexagon], color:Colors.Color) extends Drawable {
+class Piece(val hexes:Seq[Hexagon], val color:Colors.Color) extends Drawable {
 
   def getHexes = hexes
+
+  def getCubes = hexes.map(_.cube)
 
   /**
    * Returns the x coordinate of the first hexile in the piece.

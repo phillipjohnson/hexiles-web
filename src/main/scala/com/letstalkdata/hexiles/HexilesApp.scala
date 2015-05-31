@@ -1,6 +1,6 @@
 package com.letstalkdata.hexiles
 
-import com.letstalkdata.hexiles.game.{Piece, Board, State}
+import com.letstalkdata.hexiles.game.{Solution, Piece, Board, State}
 import com.letstalkdata.hexiles.graphics.{Colors, Point}
 import com.letstalkdata.hexiles.shapes.Hexagon
 
@@ -19,12 +19,14 @@ object HexilesApp extends JSApp {
   private val board = new Board()
   private val pieces:Seq[Piece] = makePieces()
 
+  private var solutions:Set[Solution] = Set.empty
+
   private var state = new State(board, pieces)
   def victory = state.isTerminal
 
   private var redraw = false
 
-  var toMove:Piece = pieces(0)
+  var toMove:Piece = pieces(2)
   var offsetX = 0.0f
   var offsetY = 0.0f
   var cursor = new Point(0, 0)
@@ -86,7 +88,6 @@ object HexilesApp extends JSApp {
       val dy = newCursor.y - cursor.y
       toMove.move(dx, dy)
       cursor = newCursor
-      checkVictory()
     }
   }
 
@@ -121,9 +122,19 @@ object HexilesApp extends JSApp {
   private def checkVictory():Boolean = {
     state = new State(board, pieces)
     if(victory) {
-      dom.console.log("You won!")
+      val solution = state.asSolution
+      if(solutions.contains(solution)) {
+        //TODO: Solution already found
+      } else {
+        solutions = solutions + solution
+        increaseScore()
+      }
     }
     victory
+  }
+
+  private def increaseScore(): Unit = {
+    document.getElementById("score").textContent = solutions.size.toString
   }
 
   private def run() = {

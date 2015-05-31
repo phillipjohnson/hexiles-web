@@ -10,7 +10,7 @@ import utest._
 object HexagonTest extends TestSuite {
 
   val Epsilon = 0.00001f
-  val size = 35
+  val size = Hexagon.radius
 
   val tests = TestSuite {
     'perimeter_has_6_lines {

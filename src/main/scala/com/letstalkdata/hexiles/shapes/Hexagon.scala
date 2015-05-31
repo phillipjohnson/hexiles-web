@@ -13,7 +13,7 @@ import org.scalajs.dom
  * Date: 4/27/15
  */
 object Hexagon {
-  val radius = 35.0f
+  val radius = 28.0f
   private val RotationAngle = (math.Pi / 3).toFloat
   val Sqrt3 = math.sqrt(3).toFloat
   private val TwoThirds = (2.0/3.0).toFloat
