@@ -13,6 +13,25 @@ html, body {
     line-height: 40px;
     border-bottom: 2px #333333 solid;
     padding: 5px 5px 5px 5px;
+    vertical-align: middle;
+}
+
+.controls {
+    //text-align: center;
+}
+
+.control {
+    vertical-align: top;
+    line-height: 34px;
+    border-radius: 4px;
+    background-image: none;
+    background-color: #fff;
+    color: #333;
+    border-color: #ccc;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    font-family: 'Poiret One', cursive;
+    font-size: 24px;
 }
 
 #canvas-holder {

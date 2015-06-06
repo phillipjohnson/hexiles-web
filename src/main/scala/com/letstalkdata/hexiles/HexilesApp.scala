@@ -8,6 +8,8 @@ import scala.scalajs.js.JSApp
 import org.scalajs.dom
 import dom.document
 
+import scala.scalajs.js.annotation.JSExport
+
 /**
  * Author: Phillip Johnson
  * Date: 4/27/15
@@ -17,7 +19,7 @@ object HexilesApp extends JSApp {
   val ctx = canvas.getContext("2d").asInstanceOf[dom.CanvasRenderingContext2D]
 
   private val board = new Board()
-  private val pieces:Seq[Piece] = makePieces()
+  private var pieces:Seq[Piece] = makePieces()
 
   private var solutions:Set[Solution] = Set.empty
 
@@ -45,6 +47,13 @@ object HexilesApp extends JSApp {
     dom.onkeydown = { (e:dom.KeyboardEvent) => alterPiece(e) }
 
     dom.setInterval(() => run(), 10)
+  }
+
+  @JSExport
+  def resetBoard():Unit = {
+    pieces = makePieces()
+    toMove = pieces(2)
+    doRedraw()
   }
 
   private def makePieces():Seq[Piece] = {
