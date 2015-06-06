@@ -1,0 +1,81 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background: #4682b4;
+}
+
+.scorebar {
+    background: #80E566;
+    color: #333333;
+    font-family: 'Poiret One', cursive;
+    font-size: 32px;
+    height: 40px;
+    line-height: 40px;
+    border-bottom: 2px #333333 solid;
+    padding: 5px 5px 5px 5px;
+    vertical-align: middle;
+}
+
+.controls {
+    //text-align: center;
+}
+
+.control {
+    vertical-align: top;
+    line-height: 34px;
+    border-radius: 4px;
+    background-image: none;
+    background-color: #fff;
+    color: #333;
+    border-color: #ccc;
+    white-space: nowrap;
+    border: 1px solid transparent;
+    font-family: 'Poiret One', cursive;
+    font-size: 24px;
+}
+
+#instructions-holder {
+    text-align: center;
+}
+
+.instructions {
+    z-index: 2;
+    text-align: center;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    margin-left: -260px;
+    font-family: 'Poiret One', cursive;
+    font-size: 24px;
+    padding: 10px 10px 10px 10px;
+    background: rgba(128, 175, 214, 1.0);
+}
+
+.screen {
+    z-index: 1;
+    position:fixed;
+    padding:0;
+    margin:0;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background:rgba(255,255,255,0.75);
+}
+
+#canvas-holder {
+    display:block;
+    text-align: center;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#game-canvas {
+    display:inline;
+}
