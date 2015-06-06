@@ -34,9 +34,46 @@ html, body {
     font-size: 24px;
 }
 
+#instructions-holder {
+    text-align: center;
+}
+
+.instructions {
+    z-index: 2;
+    text-align: center;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    margin-left: -260px;
+    font-family: 'Poiret One', cursive;
+    font-size: 24px;
+    padding: 10px 10px 10px 10px;
+    background: rgba(128, 175, 214, 1.0);
+}
+
+.screen {
+    z-index: 1;
+    position:fixed;
+    padding:0;
+    margin:0;
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+    background:rgba(255,255,255,0.75);
+}
+
 #canvas-holder {
     display:block;
     text-align: center;
+}
+
+#container {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 
 #game-canvas {

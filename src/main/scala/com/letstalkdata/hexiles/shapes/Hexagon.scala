@@ -74,7 +74,6 @@ class Hexagon(val column: Int, val row:Int) extends Drawable {
     context.fill()
     context.strokeStyle = Colors.Gray20.toString
     context.stroke()
-    drawCoords(context)
   }
 
   private def drawCoords(context:dom.CanvasRenderingContext2D): Unit = {
