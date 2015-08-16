@@ -1,4 +1,5 @@
-package com.letstalkdata.hexiles.graphics
+package com.letstalkdata.hexiles
+package graphics
 
 import org.scalajs.dom
 
@@ -11,5 +12,5 @@ import org.scalajs.dom
 trait Drawable {
   def draw(context: dom.CanvasRenderingContext2D): Unit
 
-  def contains(point:Point): Boolean
+  def contains(point: Point): Boolean
 }

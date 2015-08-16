@@ -1,4 +1,5 @@
-package com.letstalkdata.hexiles.graphics
+package com.letstalkdata.hexiles
+package graphics
 
 /**
  * A pixel on the screen.
@@ -8,5 +9,7 @@ package com.letstalkdata.hexiles.graphics
  */
 case class Point(x:Float, y:Float) {
 
-  override def toString = "(" + x + ", " + y + ")"
+  override def toString = {
+    s"($x, $y )"
+  }
 }

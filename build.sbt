@@ -1,14 +1,26 @@
-enablePlugins(ScalaJSPlugin)
+// Build file for example applications written in ScalaJS using scala-js-dom and scala-js-workbench
+lazy val root = (project in file(".")).enablePlugins(ScalaJSPlugin)
+workbenchSettings
 
-name := "hexiles-web"
+// Name is a prefix in the object code filename.
+name := "Hexiles web"
+scalaVersion := "2.11.7"
 
-version := "1.0"
-
-scalaVersion := "2.11.6"
-
+// Optional, necessary to sbt run, needs phantomJS to be installed.
+jsDependencies += RuntimeDOM
 scalaJSStage in Global := FastOptStage
 
-libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.8.0"
-libraryDependencies += "com.lihaoyi" %%% "utest" % "0.3.1"
+libraryDependencies ++= Seq(
+  "org.scala-js" %%% "scalajs-dom" % "0.8.1",
+  "com.lihaoyi" %%% "scalatags" % "0.5.2",
+  "be.doeraene" %%% "scalajs-jquery" % "0.8.0",
+  "com.lihaoyi" %%% "utest" % "0.3.1" % "test"
+)
+skip in packageJSDependencies := false // All JavaScript dependencies to be concatenated to a single file
+
+// Workbench has to know how to restart your application.
+bootSnippet := "com.letstalkdata.hexiles.HexilesApp().main();"
+// Update without refreshing the page every time fastOptJS completes
+updateBrowsers <<= updateBrowsers.triggeredBy(fastOptJS in Compile)
 
 testFrameworks += new TestFramework("utest.runner.Framework")

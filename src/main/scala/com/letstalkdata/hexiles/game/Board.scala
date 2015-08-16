@@ -1,4 +1,5 @@
-package com.letstalkdata.hexiles.game
+package com.letstalkdata.hexiles
+package game
 
 import com.letstalkdata.hexiles.graphics.{Point, Drawable}
 import com.letstalkdata.hexiles.shapes.Hexagon
@@ -12,7 +13,7 @@ import org.scalajs.dom
  */
 class Board extends Drawable {
   val tiles:Seq[Hexagon] = (0 to 4).flatMap(row => {
-    (7 - row to 11 - row).map(column => new Hexagon(column, row))
+    (7 - row to 11 - row).map(column => Hexagon(column, row))
   })
 
   override def draw(context:dom.CanvasRenderingContext2D): Unit = {

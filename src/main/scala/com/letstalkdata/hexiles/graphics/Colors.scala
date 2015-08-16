@@ -1,13 +1,16 @@
-package com.letstalkdata.hexiles.graphics
+package com.letstalkdata.hexiles
+package graphics
 
 /**
  * Author: Phillip Johnson
  * Date: 5/3/15
  */
 object Colors {
-  sealed abstract class Color(html:String) {
+
+  sealed abstract class Color(html: String) {
     override def toString = html
   }
+
   case object White extends Color("#FFFFFF")
   case object Black extends Color("#000000")
   case object Olivine extends Color("#D3BA47")
@@ -21,4 +24,5 @@ object Colors {
   case object Purple extends Color("#63378E")
   case object Gray20 extends Color("#333333")
   case object Gray60 extends Color("#999999")
+
 }
