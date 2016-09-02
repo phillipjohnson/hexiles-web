@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Hexiles</title>
+    <script type="application/javascript" src="/workbench.js"></script>
+    <!-- Include Scala.js compiled code -->
+    <script type="text/javascript" src="../hexiles-web-fastopt.js"></script>
+    <script type="text/javascript" src="../hexiles-web-jsdeps.js"></script>
+
+    <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
+    <link href="styles.css" rel="stylesheet"/>
+    <link href="keys.css" rel="stylesheet"/>
+</head>
+<body>
+<div id="container">
+
+    <div id="instructions-holder">
+        <div id="instructions-0" class="instructions" onclick="instructionsNext(0)">
+            <p>The goal of this game is to fit five of the tiles onto the board.</p>
+            <img src="img/solved-example.png"/>
+
+            <p>You get one point for each unique solution.</p>
+
+            <p>Click anywhere to continue...</p>
+        </div>
+        <div id="instructions-1" class="instructions" hidden onclick="playGame()">
+            <p>Click to select a tile.</p>
+
+            <p>CLick and drag to move a tile onto the board.</p>
+
+            <p>Press <kbd class="light">&larr;</kbd> or <kbd class="light">&rarr;</kbd> to rotate the tile.</p>
+
+            <p>Press <kbd class="light">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</kbd> to flip the
+                tile.</p>
+
+            <p>Click anywhere to start!</p>
+        </div>
+    </div>
+    <div id="scorebar" class="scorebar">
+        Score: <span id="score">0</span>
+            <span class="controls">
+                <button class="control" type="button" onclick="com.letstalkdata.hexiles.HexilesApp().resetBoard();">
+                    Reset Board
+                </button>
+            </span>
+    </div>
+    <div id="canvas-holder">
+        <canvas id="game-canvas" width="600" height="580"></canvas>
+    </div>
+
+    <div id="screen" class="screen">
+
+    </div>
+
+</div>
+<script type="text/javascript"> com.letstalkdata.hexiles.HexilesApp().main(); </script>
+<script type="text/javascript">
+        function instructionsNext(currentPage) {
+            var current = document.getElementById("instructions-" + currentPage);
+            current.setAttribute("hidden", true);
+            var next = document.getElementById("instructions-" + (currentPage + 1));
+            if(next != null){
+                next.removeAttribute("hidden");
+            }
+        }
+        function playGame() {
+            var inst = document.getElementsByClassName("instructions");
+            for(var i = 0; i < inst.length; i++) {
+                inst[i].setAttribute("hidden", true);
+            }
+            document.getElementById("screen").setAttribute("hidden", true);
+        }
+
+</script>
+</body>
+</html>

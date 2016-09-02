@@ -1,4 +1,5 @@
-package com.letstalkdata.hexiles.game
+package com.letstalkdata.hexiles
+package game
 
 import com.letstalkdata.hexiles.graphics.Colors
 import com.letstalkdata.hexiles.shapes.Hexagon
@@ -22,7 +23,7 @@ object StateTest extends TestSuite {
       //Creating one piece for each tile
       val pieces = (0 to 4).flatMap(row => {
         (7 - row to 11 - row).map(column => new Hexagon(column, row))
-      }).map(hex => new Piece(List(hex), Colors.White))
+      }).map(hex => Piece(List(hex), Colors.White))
 
       val state = new State(board, pieces)
 
@@ -32,7 +33,7 @@ object StateTest extends TestSuite {
       val board = new Board()
       val pieces = (0 to 3).flatMap(row => {
         (7 - row to 11 - row).map(column => new Hexagon(column, row))
-      }).map(hex => new Piece(List(hex), Colors.White))
+      }).map(hex => Piece(List(hex), Colors.White))
 
       val state = new State(board, pieces)
 
@@ -42,9 +43,9 @@ object StateTest extends TestSuite {
       val board = new Board()
       val pieces = (0 to 4).flatMap(row => {
         (7 - row to 11 - row).map(column => new Hexagon(column, row))
-      }).map(hex => new Piece(List(hex), Colors.White)).toList
+      }).map(hex => Piece(List(hex), Colors.White)).toList
 
-      val state = new State(board, new Piece(List(new Hexagon(7, 0)), Colors.White) :: pieces)
+      val state = new State(board, Piece(List(new Hexagon(7, 0)), Colors.White) :: pieces)
 
       assert(!state.isTerminal)
     }
