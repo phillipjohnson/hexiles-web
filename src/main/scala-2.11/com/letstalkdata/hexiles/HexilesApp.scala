@@ -1,7 +1,7 @@
 package com.letstalkdata.hexiles
 
 import com.letstalkdata.hexiles.game.{Board, Piece, Solution, State}
-import com.letstalkdata.hexiles.graphics.{Colors, Point}
+import com.letstalkdata.hexiles.graphics.Colors
 import com.letstalkdata.hexiles.shapes.Hexagon
 import org.scalajs.dom
 import org.scalajs.dom.document
@@ -20,9 +20,8 @@ object HexilesApp {
   private val board = new Board()
   private var pieces: Seq[Piece] = makePieces()
   var toMove: Piece = pieces(2)
-  var offsetX = 0.0f
-  var offsetY = 0.0f
-  var cursor = Point(0, 0)
+  var (offsetX, offsetY )= (0d, 0d)
+  var cursor = Point(0d, 0d)
   private var solutions: Set[Solution] = Set.empty
   private var state = new State(board, pieces)
   private var redraw = false
@@ -39,9 +38,9 @@ object HexilesApp {
 
     canvas.onmousemove = { (e: dom.MouseEvent) => movePiece(e) }
 
-    dom.onkeydown = { (e: dom.KeyboardEvent) => alterPiece(e) }
+    dom.window.onkeydown = { (e: dom.KeyboardEvent) => alterPiece(e) }
 
-    dom.setInterval(() => run(), 10)
+    dom.window.setInterval(() => run(), 10)
   }
 
   @JSExport
@@ -67,7 +66,7 @@ object HexilesApp {
     ctx.fillStyle = "#FFFFFF"
     ctx.fillRect(0, 0, canvas.width, canvas.height)
     board.draw(ctx)
-    pieces.foreach(piece => piece.draw(ctx))
+    pieces.foreach(_.draw(ctx))
     if (!victory) toMove.highlight(ctx)
   }
 
@@ -115,13 +114,13 @@ object HexilesApp {
     }
   }
 
-  private def getRelativeCursor(e: dom.MouseEvent): Point = {
+  private def getRelativeCursor(e: dom.MouseEvent): Point[Double] = {
     val x = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - Math.floor(canvas.offsetLeft)
     val y = e.clientY + document.body.scrollTop + document.documentElement.scrollTop - Math.floor(canvas.offsetTop) + 1
-    Point(x.toFloat, y.toFloat)
+    Point(x.toDouble, y.toDouble)
   }
 
-  private def findClickedPiece(point: Point): Option[Piece] = {
+  private def findClickedPiece(point: Point[Double]): Option[Piece] = {
     pieces.find(piece => piece.contains(point))
   }
 

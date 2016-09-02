@@ -14,14 +14,13 @@ import org.scalajs.dom
  * Date: 4/27/15
  */
 object Hexagon {
-  val radius = 28.0f
-  val Sqrt3 = math.sqrt(3).toFloat
-  private val RotationAngle = (math.Pi / 3).toFloat
-  private val TwoThirds = (2.0 / 3.0).toFloat
+  val radius = 28.0
+  val Sqrt3 = math.sqrt(3)
+  private val RotationAngle = math.Pi / 3
+  private val TwoThirds = 2.0 / 3.0
 }
 
-
-case class Hexagon(column: Int, row: Int) extends Drawable {
+case class Hexagon(column: Int, row: Int) extends Drawable[Double] {
   var cube = Cube(column, -column - row, row)
 
   /**
@@ -77,7 +76,7 @@ case class Hexagon(column: Int, row: Int) extends Drawable {
     context.stroke()
   }
 
-  private def perimeterPoints(): Seq[Point] = {
+  private def perimeterPoints(): Seq[Point[Double]] = {
     val center = centerPoint()
     val size = Hexagon.radius
     (0 until 6).map(i => Point(
@@ -98,7 +97,7 @@ case class Hexagon(column: Int, row: Int) extends Drawable {
    * @param point the point to check
    * @return true if the provided point is within the bounds of the hexagon.
    */
-  def contains(point: Point) = {
+  def contains(point: Point[Double]): Boolean = {
     val nearestCube = pointToCube(point)
     nearestCube.x == cube.x && nearestCube.y == cube.y && nearestCube.z == cube.z
   }
@@ -107,18 +106,18 @@ case class Hexagon(column: Int, row: Int) extends Drawable {
    * Moves the hexagon to the nearest hexagon grid coordinate
    * @param point the point to use for realignment. Typically, the center of the hexagon.
    */
-  def snapToGrid(point: Point) = {
+  def snapToGrid(point: Point[Double]) = {
     resetGridPosition(point)
     x = cube.toPoint.x
     y = cube.toPoint.y
   }
 
-  private def resetGridPosition(point: Point) = {
+  private def resetGridPosition(point: Point[Double]) = {
     val nearestCube = pointToCube(point)
     cube = nearestCube
   }
 
-  private def pointToCube(point: Point): Cube = {
+  private def pointToCube(point: Point[Double]): Cube = {
     val fractionalColumn = point.x * Hexagon.TwoThirds / Hexagon.radius
     val fractionalRow = (-point.x / 3.0f + Hexagon.Sqrt3 / 3.0f * point.y) / Hexagon.radius
 

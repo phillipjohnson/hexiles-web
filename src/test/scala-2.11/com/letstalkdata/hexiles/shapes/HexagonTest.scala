@@ -1,7 +1,7 @@
 package com.letstalkdata.hexiles
 package shapes
 
-import com.letstalkdata.hexiles.graphics.{Segment, Point}
+import com.letstalkdata.hexiles.graphics.Segment
 import utest._
 
 /**
@@ -46,7 +46,7 @@ object HexagonTest extends TestSuite {
     }
     'hexagon_contains_center_point {
       val hex = Hexagon(1, 0)
-      val center =Point(1.5f * size, math.sqrt(3).toFloat/2.0f * size)
+      val center =Point(1.5d * size, math.sqrt(3).toFloat/2.0d * size)
 
       assert(hex.contains(center))
     }
@@ -58,7 +58,7 @@ object HexagonTest extends TestSuite {
     }
     'hexagon_contains_edge {
       val hex = Hexagon(1, 0)
-      val edge =Point(1.5f * size, 0)
+      val edge =Point[Double](1.5f * size, 0)
 
       assert(hex.contains(edge))
     }
@@ -70,7 +70,7 @@ object HexagonTest extends TestSuite {
     }
   }
 
-  def pointsReasonablyEqual(p1:Point, p2:Point, e: Float) = {
+  def pointsReasonablyEqual(p1:Point[Double], p2:Point[Double], e: Float) = {
     math.abs(p1.x - p2.x) < e && math.abs(p1.y - p2.y) < e
   }
 

@@ -9,8 +9,8 @@ import org.scalajs.dom
  * Author: Phillip Johnson
  * Date: 4/30/15
  */
-trait Drawable {
+trait Drawable[T] {
   def draw(context: dom.CanvasRenderingContext2D): Unit
 
-  def contains(point: Point): Boolean
+  def contains(point: Point[T]): Boolean
 }

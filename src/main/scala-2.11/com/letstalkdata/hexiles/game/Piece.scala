@@ -1,7 +1,7 @@
 package com.letstalkdata.hexiles
 package game
 
-import com.letstalkdata.hexiles.graphics.{Colors, Drawable, Point}
+import com.letstalkdata.hexiles.graphics.{Colors, Drawable}
 import com.letstalkdata.hexiles.shapes.Hexagon
 import org.scalajs.dom.CanvasRenderingContext2D
 
@@ -9,7 +9,7 @@ import org.scalajs.dom.CanvasRenderingContext2D
  * Author: Phillip Johnson
 
  */
-case class Piece(hexes: Seq[Hexagon], color: Colors.Color) extends Drawable {
+case class Piece(hexes: Seq[Hexagon], color: Colors.Color) extends Drawable[Double] {
 
   def getHexes = hexes
 
@@ -32,7 +32,7 @@ case class Piece(hexes: Seq[Hexagon], color: Colors.Color) extends Drawable {
    * @param dx the number of pixels to move in the x direction
    * @param dy the number of picels to move in the y direction
    */
-  def move(dx: Float, dy: Float): Unit = {
+  def move(dx: Double, dy: Double): Unit = {
     for (hex <- hexes) {
       hex.x += dx
       hex.y += dy
@@ -76,5 +76,5 @@ case class Piece(hexes: Seq[Hexagon], color: Colors.Color) extends Drawable {
     hexes.foreach(hex => hex.draw(context, color, shadow = false))
   }
 
-  override def contains(point: Point): Boolean = hexes.exists(hex => hex.contains(point))
+  override def contains(point: Point[Double]): Boolean = hexes.exists(hex => hex.contains(point))
 }

@@ -1,13 +1,11 @@
 package com.letstalkdata.hexiles
 package shapes
 
-import com.letstalkdata.hexiles.graphics.Point
-
 /**
  * Author: Phillip Johnson
  * Date: 5/16/15
  */
-case class Rectangle(var topLeft: Point, var bottomRight: Point) {
+case class Rectangle(var topLeft: Point[Double], var bottomRight: Point[Double]) {
   def topRight = Point(bottomRight.x, topLeft.y)
 
   def bottomLeft = Point(topLeft.x, bottomRight.y)
